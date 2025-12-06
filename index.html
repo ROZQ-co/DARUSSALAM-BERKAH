@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Akses Share — Quick Launcher</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen p-6 font-sans">
+  <div class="max-w-4xl mx-auto">
+    <header class="mb-6">
+      <h1 class="text-2xl font-semibold">Akses Share — Quick Launcher</h1>
+      <p class="text-sm text-slate-600">Halaman single-file untuk menyimpan alamat share, membuat perintah Windows+R, dan menyalin link cepat.</p>
+    </header>
+
+    <main class="bg-white shadow rounded-lg p-6">
+      <section class="mb-6">
+        <label class="block text-sm font-medium text-slate-700 mb-2">Tambah resource</label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <input id="name" placeholder="Nama (contoh: File Server)" class="col-span-2 p-2 border rounded" />
+          <input id="path" placeholder="Path (contoh: \\SERVER\share atau https://...)" class="p-2 border rounded" />
+        </div>
+        <div class="mt-3 flex gap-2">
+          <button id="addBtn" class="px-4 py-2 bg-slate-800 text-white rounded">Tambah</button>
+          <button id="loadSample" class="px-4 py-2 border rounded">Load contoh</button>
+          <button id="exportBtn" class="px-4 py-2 border rounded">Export JSON</button>
+        </div>
+      </section>
+
+      <section class="mb-4">
+        <input id="search" placeholder="Cari nama..." class="w-full p-2 border rounded mb-4" />
+        <h2 class="text-lg font-medium mb-3">Daftar resource</h2>
+        <div id="list" class="space-y-3"></div>
+      </section>
+
+      <template id="itemTpl">
+        <div class="flex items-start justify-between p-3 border rounded">
+          <div>
+            <div class="font-medium name"></div>
+            
+            
+          </div>
+          <div class="flex gap-2 ml-4">
+            <button class="copyBtn px-3 py-1 border rounded text-sm">Salin</button>
+            <button class="openBtn px-3 py-1 bg-slate-800 text-white rounded text-sm">Buka</button>
+            <button class="delBtn px-3 py-1 text-red-600">Hapus</button>
+          </div>
+        </div>
+      </template>
+
+    </main>
+
+    <footer class="text-sm text-slate-500 mt-4">Petunjuk: Untuk membuka share di Windows lewat <span class="font-mono">Win+R</span>, tekan Win+R lalu paste perintah yang disalin. Untuk path UNC gunakan format <span class="font-mono">\\\\SERVER\\share</span>. Jika ingin menjalankan lewat explorer gunakan <span class="font-mono">explorer.exe \\\\SERVER\\share</span>.</footer>
+  </div>
+
+  <script>
+    // Simple single-file app. Edit `resources` variable or use the UI.
+    let resources = [
+        {name:'AKIFA NAILA DZAKIRA AFTANI', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=AKIFA+NAILA+DZAKIRA+AFTANI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0141802485&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'FAEYZA GHANIYA PUTRI MELDA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=FAEYZA+GHANIYA+PUTRI+MELDA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0135167724&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'FAUZIAN REZA MAHARDIKA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=FAUZIAN+REZA+MAHARDIKA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0146238886&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'NASYIFA IKA AZZAHRA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=NASYIFA+IKA+AZZAHRA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0142810317&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'NAURA HASNAYA ARFIYAH', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=NAURA+HASNAYA+ARFIYAH&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0147498102&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'OCTAVANIA LISTYA PUTRI', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=OCTAVANIA+LISTYA+PUTRI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0149691773&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'SHERLY NAURA ALMEERA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=SHERLY+NAURA+ALMEERA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0158272514&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'SYADZA AZARIA ATA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=SYADZA+AZARIA+ATA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0155555635&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'ARJUNA ATHALA TIRTANA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=ARJUNA+ATHALA+TIRTANA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3134278839&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'HAFIZA KHAIRA LUBNA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=HAFIZA+KHAIRA+LUBNA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0131484305&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'KHAYLA AZZAHRA ALFATIA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=KHAYLA+AZZAHRA+ALFATIA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0137209416&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'MUHAMMAD KEVIN EKO WAHONO', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=MUHAMMAD+KEVIN+EKO+WAHONO&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0142426028&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'MUHAMMAD NABIL SYAFIQ RAMADHAN', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=MUHAMMAD+NABIL+SYAFIQ+RAMADHAN&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0137591248&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'RAZIQ HANAN', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=RAZIQ+HANAN&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0138211828&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'}
+      ];
+
+    const nameEl = document.getElementById('name');
+    const pathEl = document.getElementById('path');
+    const addBtn = document.getElementById('addBtn');
+    const listEl = document.getElementById('list');
+    const tpl = document.getElementById('itemTpl');
+    const loadSample = document.getElementById('loadSample');
+    const exportBtn = document.getElementById('exportBtn');
+
+    function normalizeRunCmd(p) {
+      // if starts with \\ or \\? treat as UNC; if starts with http(s) return url; otherwise try explorer
+      if (!p) return '';
+      if (/^https?:\/\//i.test(p)) return p;
+      if (/^\\\\/.test(p) || /^\\\\\\\\/.test(p)) return p; // UNC
+      // fallback: explorer.exe <path>
+      return 'explorer.exe ' + p;
+    }
+
+    function render() {
+      listEl.innerHTML = '';
+      const search = document.getElementById('search').value.toLowerCase();
+      resources.filter(r => r.name.toLowerCase().includes(search)).forEach((r, idx) => {
+        const node = tpl.content.cloneNode(true);
+        node.querySelector('.name').textContent = r.name || '—';
+        
+        const cmd = normalizeRunCmd(r.path);
+        
+        const copyBtn = node.querySelector('.copyBtn');
+        const openBtn = node.querySelector('.openBtn');
+        const delBtn = node.querySelector('.delBtn');
+
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(cmd).then(()=>{
+            copyBtn.textContent = 'Tersalin';
+            setTimeout(()=> copyBtn.textContent = 'Salin', 1200);
+          });
+        });
+
+        openBtn.addEventListener('click', () => {
+          // open in new tab if http, otherwise just try to open path (will not open UNC in browser)
+          if (/^https?:\/\//i.test(r.path)) window.open(r.path, '_blank');
+          else alert('Di Windows: tekan Win+R lalu paste perintah yang disalin.');
+        });
+
+        delBtn.addEventListener('click', () => {
+          resources.splice(idx,1); render();
+        });
+
+        listEl.appendChild(node);
+      });
+    }
+
+    addBtn.addEventListener('click', () => {
+      const name = nameEl.value.trim();
+      const path = pathEl.value.trim();
+      if (!path) { alert('Masukkan path atau URL'); return; }
+      resources.push({name, path});
+      nameEl.value = ''; pathEl.value = '';
+      render();
+    });
+
+    loadSample.addEventListener('click', ()=>{
+      resources = [
+        {name:'File Server', path:'\\\\NAS01\\Publik'},
+        {name:'Internal Web', path:'https://intranet.example.local'},
+        {name:'Share Guru', path:'\\\\192.168.1.50\\guru'}
+      ];
+      render();
+    });
+
+    exportBtn.addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify(resources, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'resources.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('search').addEventListener('input', render);
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
