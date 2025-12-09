@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Akses Share — Quick Launcher</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -18,7 +18,7 @@
         <label class="block text-sm font-medium text-slate-700 mb-2">Tambah resource</label>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <input id="name" placeholder="Nama (contoh: File Server)" class="col-span-2 p-2 border rounded" />
-          <input id="path" placeholder="Path (contoh: \SERVER\share atau https://...)" class="p-2 border rounded" />
+          <input id="path" placeholder="Path (contoh: \\SERVER\share atau https://...)" class="p-2 border rounded" />
         </div>
         <div class="mt-3 flex gap-2">
           <button id="addBtn" class="px-4 py-2 bg-slate-800 text-white rounded">Tambah</button>
@@ -37,6 +37,8 @@
         <div class="flex items-start justify-between p-3 border rounded">
           <div>
             <div class="font-medium name"></div>
+            
+            
           </div>
           <div class="flex gap-2 ml-4">
             <button class="copyBtn px-3 py-1 border rounded text-sm">Salin</button>
@@ -45,225 +47,175 @@
           </div>
         </div>
       </template>
+
     </main>
 
-    <footer class="text-sm text-slate-500 mt-4">
-      Petunjuk: Untuk membuka share di Windows lewat <span class="font-mono">Win+R</span>, tekan Win+R lalu paste perintah yang disalin.
-      Untuk path UNC gunakan format <span class="font-mono">\\SERVER\share</span>.
-      Jika ingin menjalankan lewat explorer gunakan <span class="font-mono">explorer.exe \SERVER\share</span>.
-    </footer>
+    <footer class="text-sm text-slate-500 mt-4">Petunjuk: Untuk membuka share di Windows lewat <span class="font-mono">Win+R</span>, tekan Win+R lalu paste perintah yang disalin. Untuk path UNC gunakan format <span class="font-mono">\\\\SERVER\\share</span>. Jika ingin menjalankan lewat explorer gunakan <span class="font-mono">explorer.exe \\\\SERVER\\share</span>.</footer>
   </div>
 
-<script>
-let resources = [
-  {name:'AKIFA NAILA DZAKIRA AFTANI', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=AKIFA+NAILA+DZAKIRA+AFTANI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0141802485&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
-  {name:'FAEYZA GHANIYA PUTRI MELDA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=FAEYZA+GHANIYA+PUTRI+MELDA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0135167724&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
-  {name:'FAUZIAN REZA MAHARDIKA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=FAUZIAN+REZA+MAHARDIKA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0146238886&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+  <script>
+    // Simple single-file app. Edit `resources` variable or use the UI.
+    let resources = [
+        {name:'AKIFA NAILA DZAKIRA AFTANI', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=AKIFA+NAILA+DZAKIRA+AFTANI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0141802485&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'FAEYZA GHANIYA PUTRI MELDA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=FAEYZA+GHANIYA+PUTRI+MELDA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0135167724&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'FAUZIAN REZA MAHARDIKA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=FAUZIAN+REZA+MAHARDIKA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0146238886&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'NASYIFA IKA AZZAHRA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=NASYIFA+IKA+AZZAHRA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0142810317&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'NAURA HASNAYA ARFIYAH', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=NAURA+HASNAYA+ARFIYAH&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0147498102&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'OCTAVANIA LISTYA PUTRI', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=OCTAVANIA+LISTYA+PUTRI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0149691773&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'SHERLY NAURA ALMEERA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=SHERLY+NAURA+ALMEERA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0158272514&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'SYADZA AZARIA ATA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=SYADZA+AZARIA+ATA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0155555635&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'ARJUNA ATHALA TIRTANA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=ARJUNA+ATHALA+TIRTANA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3134278839&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'HAFIZA KHAIRA LUBNA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=HAFIZA+KHAIRA+LUBNA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0131484305&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'KHAYLA AZZAHRA ALFATIA', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=KHAYLA+AZZAHRA+ALFATIA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0137209416&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'MUHAMMAD KEVIN EKO WAHONO', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=MUHAMMAD+KEVIN+EKO+WAHONO&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0142426028&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'MUHAMMAD NABIL SYAFIQ RAMADHAN', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=MUHAMMAD+NABIL+SYAFIQ+RAMADHAN&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0137591248&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'},
+        {name:'RAZIQ HANAN', path:'https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=RAZIQ+HANAN&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0138211828&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'}
+        const data = [
+  { name: "ALMER DANISWARA MAHARDIKA", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ALMER+DANISWARA+MAHARDIKA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3180917871&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
 
-  {name:'ALMER DANISWARA MAHARDIKA', path:'https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ALMER+DANISWARA+MAHARDIKA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3180917871&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur'}
+  { name: "ARFAN MISDAQ MU'TASHIM SETIAWAN", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ARFAN+MISDAQ+MU%27TASHIM+SETIAWAN&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3195386755&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "ARRAYYAN RAFISQY AHSAN", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ARRAYYAN+RAFISQY+AHSAN&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3186435336&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "AZCA HAFIZAH SALSABILA", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=AZCA+HAFIZAH+SALSABILA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3182341314&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "NAFISA CAHYA HUMAIROH", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=NAFISA+CAHYA+HUMAIROH&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3196219504&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "AISYAH HIFDZOTUL HUSNA", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=AISYAH+HIFDZOTUL+HUSNA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3174012537&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "Angkling Dharma Al Ghifari", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=Angkling+Dharma+Al+Ghifari&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3171700120&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "ARSYAKA BAJRA WIYASAWIRYA", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ARSYAKA+BAJRA+WIYASAWIRYA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3173546892&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "HAKIM MAKARIM AMRULLAH", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=HAKIM+MAKARIM+AMRULLAH&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3172760435&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "Izzata Hafizha Hisyam", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=Izzata+Hafizha+Hisyam&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3178388497&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "JUNARAHMA GALUH UMAR SAYYID", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=JUNARAHMA+GALUH+UMAR+SAYYID&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3174641035&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "KEYLA FAYAN ADHISTI", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=KEYLA+FAYAN+ADHISTI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3181984107&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "NADIRA RAHMA WAHYUDIA", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=NADIRA+RAHMA+WAHYUDIA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3178738142&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "AISHA GHANIA SHALIHAH", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=AISHA+GHANIA+SHALIHAH&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3168626386&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "ASYFA LATIFUNNISA ALARROS", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ASYFA+LATIFUNNISA+ALARROS&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3160904823&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "ELSYAFANI NAJMA AZZURAPUTRI", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ELSYAFANI+NAJMA+AZZURAPUTRI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3168244640&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "HAAFIZHAH SHOFIYYAH ASY SYAHIDAH", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=HAAFIZHAH+SHOFIYYAH+ASY+SYAHIDAH&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3170834476&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "MUHAMAD WILDAN ILTIZAMULHAQI", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=MUHAMAD+WILDAN+ILTIZAMULHAQI&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3163414885&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "MUTIA NAZALIENDRA AJI", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=MUTIA+NAZALIENDRA+AJI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3174755085&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "QIRANI ALMAHYRA SRIKANDI", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=QIRANI+ALMAHYRA+SRIKANDI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3168595937&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "RAFARDHAN AQEEL GHAZIA AGUNG", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=RAFARDHAN+AQEEL+GHAZIA+AGUNG&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3172390759&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "ZAHIDAN NADHIF ALWI SUSANTO", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ZAHIDAN+NADHIF+ALWI+SUSANTO&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0162115333&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "ZEA ADEEVA CALIANA ATMAKA", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ZEA+ADEEVA+CALIANA+ATMAKA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0172248981&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "ABRIZAR HANGGARU SAKTI HARTANTO", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ABRIZAR+HANGGARU+SAKTI+HARTANTO&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3155542092&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "FELIX APRILIAN DWI ANGGARA", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=FELIX+APRILIAN+DWI+ANGGARA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0154291460&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "GHAISAN SAKHA LUBAWI", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=GHAISAN+SAKHA+LUBAWI&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3164632570&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "IRSYAD MAULANA MINANUROHMAN", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=IRSYAD+MAULANA+MINANUROHMAN&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0151736466&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "MUHAMMAD WILDAN NABHAN ABQARI", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=MUHAMMAD+WILDAN+NABHAN+ABQARI&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3169800633&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "SAKHA GARA PRADIPTA FARJANA", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=SAKHA+GARA+PRADIPTA+FARJANA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0159825248&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "SHAHZADA KHALIFA AT THARIQ", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=SHAHZADA+KHALIFA+AT+THARIQ&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0151220541&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
+
+  { name: "SYAUQINA MAULIDA ARDHIANI", url: "https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=SYAUQINA+MAULIDA+ARDHIANI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=3152598654&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur" },
 ];
 
-const nameEl = document.getElementById('name');
-const pathEl = document.getElementById('path');
-const addBtn = document.getElementById('addBtn');
-const listEl = document.getElementById('list');
-const tpl = document.getElementById('itemTpl');
+      ];
 
-function normalizeRunCmd(p) {
-  if (!p) return '';
-  if (/^https?:\/\//i.test(p)) return p;
-  if (/^\\/.test(p)) return p;
-  return 'explorer.exe ' + p;
-}
+    const nameEl = document.getElementById('name');
+    const pathEl = document.getElementById('path');
+    const addBtn = document.getElementById('addBtn');
+    const listEl = document.getElementById('list');
+    const tpl = document.getElementById('itemTpl');
+    const loadSample = document.getElementById('loadSample');
+    const exportBtn = document.getElementById('exportBtn');
 
-function render() {
-  listEl.innerHTML = '';
-  const search = document.getElementById('search').value.toLowerCase();
+    function normalizeRunCmd(p) {
+      // if starts with \\ or \\? treat as UNC; if starts with http(s) return url; otherwise try explorer
+      if (!p) return '';
+      if (/^https?:\/\//i.test(p)) return p;
+      if (/^\\\\/.test(p) || /^\\\\\\\\/.test(p)) return p; // UNC
+      // fallback: explorer.exe <path>
+      return 'explorer.exe ' + p;
+    }
 
-  resources.filter(r => r.name.toLowerCase().includes(search)).forEach((r, idx) => {
-    const node = tpl.content.cloneNode(true);
-    node.querySelector('.name').textContent = r.name || '—';
+    function render() {
+      listEl.innerHTML = '';
+      const search = document.getElementById('search').value.toLowerCase();
+      resources.filter(r => r.name.toLowerCase().includes(search)).forEach((r, idx) => {
+        const node = tpl.content.cloneNode(true);
+        node.querySelector('.name').textContent = r.name || '—';
+        
+        const cmd = normalizeRunCmd(r.path);
+        
+        const copyBtn = node.querySelector('.copyBtn');
+        const openBtn = node.querySelector('.openBtn');
+        const delBtn = node.querySelector('.delBtn');
 
-    const cmd = normalizeRunCmd(r.path);
-    const copyBtn = node.querySelector('.copyBtn');
-    const openBtn = node.querySelector('.openBtn');
-    const delBtn = node.querySelector('.delBtn');
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(cmd).then(()=>{
+            copyBtn.textContent = 'Tersalin';
+            setTimeout(()=> copyBtn.textContent = 'Salin', 1200);
+          });
+        });
 
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(cmd).then(()=>{
-        copyBtn.textContent = 'Tersalin';
-        setTimeout(()=> copyBtn.textContent = 'Salin', 1200);
+        openBtn.addEventListener('click', () => {
+          // open in new tab if http, otherwise just try to open path (will not open UNC in browser)
+          if (/^https?:\/\//i.test(r.path)) window.open(r.path, '_blank');
+          else alert('Di Windows: tekan Win+R lalu paste perintah yang disalin.');
+        });
+
+        delBtn.addEventListener('click', () => {
+          resources.splice(idx,1); render();
+        });
+
+        listEl.appendChild(node);
       });
-    });
+    }
 
-    openBtn.addEventListener('click', () => {
-      if (/^https?:\/\//i.test(r.path)) window.open(r.path, '_blank');
-      else alert('Di Windows: tekan Win+R lalu paste perintah yang disalin.');
-    });
-
-    delBtn.addEventListener('click', () => {
-      resources.splice(idx, 1);
+    addBtn.addEventListener('click', () => {
+      const name = nameEl.value.trim();
+      const path = pathEl.value.trim();
+      if (!path) { alert('Masukkan path atau URL'); return; }
+      resources.push({name, path});
+      nameEl.value = ''; pathEl.value = '';
       render();
     });
 
-    listEl.appendChild(node);
-  });
-}
-
-document.getElementById('addBtn').addEventListener('click', () => {
-  const name = nameEl.value.trim();
-  const path = pathEl.value.trim();
-  if (!path) return alert('Masukkan path atau URL');
-  resources.push({ name, path });
-  nameEl.value = '';
-  pathEl.value = '';
-  render();
-});
-
-document.getElementById('search').addEventListener('input', render);
-render();
-</script>
-
-</body>
-</html><!doctype html>
-<html lang="id">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Akses Share — Quick Launcher</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-50 min-h-screen p-6 font-sans">
-<div class="max-w-4xl mx-auto">
-<header class="mb-6">
-  <h1 class="text-2xl font-semibold">SD PLUS DARUSSALAM</h1>
-  <p class="text-sm text-slate-600">Halaman single-file untuk menyimpan alamat share, membuat perintah Windows+R, dan menyalin link cepat.</p>
-</header>
-
-<main class="bg-white shadow rounded-lg p-6">
-<section class="mb-6">
-  <label class="block text-sm font-medium text-slate-700 mb-2">Tambah resource</label>
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-    <input id="name" placeholder="Nama" class="col-span-2 p-2 border rounded" />
-    <input id="path" placeholder="Path atau URL" class="p-2 border rounded" />
-  </div>
-  <div class="mt-3 flex gap-2">
-    <button id="addBtn" class="px-4 py-2 bg-slate-800 text-white rounded">Tambah</button>
-    <button id="loadSample" class="px-4 py-2 border rounded">Load contoh</button>
-    <button id="exportBtn" class="px-4 py-2 border rounded">Export JSON</button>
-  </div>
-</section>
-
-<section class="mb-4">
-  <input id="search" placeholder="Cari nama..." class="w-full p-2 border rounded mb-4" />
-  <h2 class="text-lg font-medium mb-3">Daftar resource</h2>
-  <div id="list" class="space-y-3"></div>
-</section>
-
-<template id="itemTpl">
-  <div class="flex items-start justify-between p-3 border rounded">
-    <div><div class="font-medium name"></div></div>
-    <div class="flex gap-2 ml-4">
-      <button class="copyBtn px-3 py-1 border rounded text-sm">Salin</button>
-      <button class="openBtn px-3 py-1 bg-slate-800 text-white rounded text-sm">Buka</button>
-      <button class="delBtn px-3 py-1 text-red-600">Hapus</button>
-    </div>
-  </div>
-</template>
-</main>
-
-<footer class="text-sm text-slate-500 mt-4">
-  Petunjuk: Gunakan Win+R lalu paste perintah. UNC: \\SERVER\share.
-</footer>
-</div>
-
-<script>
-let resources = [
-  {name:"AKIFA NAILA DZAKIRA AFTANI", path:"https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=AKIFA+NAILA+DZAKIRA+AFTANI&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0141802485&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur"},
-  {name:"FAEYZA GHANIYA PUTRI MELDA", path:"https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=FAEYZA+GHANIYA+PUTRI+MELDA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0135167724&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur"},
-  {name:"FAUZIAN REZA MAHARDIKA", path:"https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?entry.91861699=FAUZIAN+REZA+MAHARDIKA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0146238886&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur"},
-  {name:"NASYIFA IKA AZZAHRA", path:"https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=NASYIFA+IKA+AZZAHRA&entry.851575806=20575898&entry.664715575=Perempuan&entry.1823044574=Islam&entry.1842700653=0142810317&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur"},
-  {name:"RAZIQ HANAN", path:"https://docs.google.com/forms/d/e/1FAIpQLScWI_LxaAH71Xk3pBvNiLuxy-x3BIkAJfUXceg4qCy1-Kv2YA/viewform?usp=sf_link&entry.91861699=RAZIQ+HANAN&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=0138211828&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur"},
-
-  // ===== Tambahan dari kamu =====
-  {name:"ALMER DANISWARA MAHARDIKA", path:"https://docs.google.com/forms/d/e/1FAIpQLSe4_b5Y5W3k-aXYH0oQJUXPMsezwEJWG40KINPjyobb82ls9Q/viewform?usp=sf_link&entry.91861699=ALMER+DANISWARA+MAHARDIKA&entry.851575806=20575898&entry.664715575=Laki-laki&entry.1823044574=Islam&entry.1842700653=3180917871&entry.1775251487=Kab.+Ngawi+-+Prov.+Jawa+Timur"}
-];
-
-const nameEl = document.getElementById('name');
-const pathEl = document.getElementById('path');
-const addBtn = document.getElementById('addBtn');
-const listEl = document.getElementById('list');
-const tpl = document.getElementById('itemTpl');
-const loadSample = document.getElementById('loadSample');
-const exportBtn = document.getElementById('exportBtn');
-
-function normalizeRunCmd(p){
-  if(!p) return "";
-  if(/^https?:\/\//i.test(p)) return p;
-  if(/^\\\\/.test(p)) return p;
-  return "explorer.exe " + p;
-}
-
-function render(){
-  listEl.innerHTML = "";
-  const s = document.getElementById('search').value.toLowerCase();
-  resources.filter(r=>r.name.toLowerCase().includes(s)).forEach((r,i)=>{
-    const n = tpl.content.cloneNode(true);
-    n.querySelector('.name').textContent = r.name;
-    const cmd = normalizeRunCmd(r.path);
-
-    n.querySelector('.copyBtn').addEventListener('click', ()=>{
-      navigator.clipboard.writeText(cmd).then(()=>{
-        const b = n.querySelector('.copyBtn');
-        b.textContent = 'Tersalin';
-        setTimeout(()=> b.textContent='Salin', 1200);
-      });
-    });
-
-    n.querySelector('.openBtn').addEventListener('click', ()=>{
-      if(/^https?:\/\//i.test(r.path)) window.open(r.path,'_blank');
-      else alert('Gunakan Win+R lalu paste perintah.');
-    });
-
-    n.querySelector('.delBtn').addEventListener('click', ()=>{
-      resources.splice(i,1);
+    loadSample.addEventListener('click', ()=>{
+      resources = [
+        {name:'File Server', path:'\\\\NAS01\\Publik'},
+        {name:'Internal Web', path:'https://intranet.example.local'},
+        {name:'Share Guru', path:'\\\\192.168.1.50\\guru'}
+      ];
       render();
     });
 
-    listEl.appendChild(n);
-  });
-}
+    exportBtn.addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify(resources, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'resources.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
 
-addBtn.addEventListener('click', ()=>{
-  const name = nameEl.value.trim();
-  const path = pathEl.value.trim();
-  if(!path) return alert('Masukkan path/URL');
-  resources.push({name, path});
-  nameEl.value = '';
-  pathEl.value = '';
-  render();
-});
-
-document.getElementById('search').addEventListener('input', render);
-loadSample.addEventListener('click', ()=>{
-  resources = [
-    {name:'File Server', path:'\\\\NAS01\\Publik'},
-    {name:'Internal Web', path:'https://intranet.example.local'},
-    {name:'Share Guru', path:'\\\\192.168.1.50\\guru'}
-  ]; render();
-});
-
-exportBtn.addEventListener('click', ()=>{
-  const blob = new Blob([JSON.stringify(resources,null,2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'resources.json';
-  document.body.appendChild(a); a.click(); a.remove();
-  URL.revokeObjectURL(url);
-});
-
-render();
-</script>
+    document.getElementById('search').addEventListener('input', render);
+    // Initial render
+    render();
+  </script>
 </body>
 </html>
+
